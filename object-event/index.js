@@ -221,3 +221,211 @@ elem13.addEventListener("click", function (event) {
     }
   }
 });
+
+// preventDefault method in Event
+let elem14 = document.querySelector("#elem14");
+elem14.addEventListener("click", function (event) {
+  event.preventDefault();
+  alert("You can't go to this page");
+});
+
+// ex1
+let elem15 = document.querySelector("#elem15");
+elem15.addEventListener("click", () => changeText(elem15, event));
+
+let elem16 = document.querySelector("#elem16");
+
+elem16.addEventListener("click", () => changeText(elem16, event));
+
+function changeText(elem, event) {
+  elem.innerHTML += elem.href;
+  event.preventDefault();
+}
+
+// ex2
+let elem19 = document.querySelector("#elem19");
+let elem20 = document.querySelector("#elem20");
+
+function countNumbers() {
+  let elem17 = document.querySelector("#elem17").value;
+  let elem18 = document.querySelector("#elem18").value;
+  return +elem17 + +elem18;
+}
+
+elem20.addEventListener("click", function (event) {
+  elem19.innerHTML = "";
+  event.preventDefault();
+  elem19.innerHTML += "Result: " + countNumbers();
+});
+
+// всплиття подій
+let elem21 = document.querySelector("#elem21");
+let elem22 = document.querySelector("#elem22");
+let elem23 = document.querySelector("#elem23");
+
+elem21.addEventListener("click", function () {
+  alert("elem21");
+});
+
+elem22.addEventListener("focus", function () {
+  alert("elem22");
+});
+
+elem23.addEventListener("click", function () {
+  alert("elem23");
+});
+
+// Получение целевого элемента при всплытии событий
+// event.target.matches();
+let elem24 = document.querySelector("#elem24");
+elem24.addEventListener("click", function (event) {
+  // alert('click');
+  // console.log(this);
+  // console.log(event.target);
+  // if (event.target.tagName === "DIV") {
+  //   alert("Click on div");
+  // } else if (event.target.tagName === "P") {
+  //   alert("click on p");
+  // }
+  if (event.target.matches("div")) {
+    alert("clicked on div");
+  } else if (event.target.matches("p")) {
+    alert("clicked on p");
+  }
+});
+
+// ex1
+let elem25 = document.querySelector("#elem25");
+elem25.addEventListener("click", function (event) {
+  alert(event.target.tagName);
+});
+
+// ex2
+let num = 3;
+elem25.addEventListener("click", function (event) {
+  if (event.target.matches("li")) {
+    event.target.innerHTML += "!";
+  } else if (event.target.matches("ul")) {
+    num += 1;
+    let liEl = document.createElement("LI");
+    let textNode = document.createTextNode(num);
+    liEl.appendChild(textNode);
+    event.target.appendChild(liEl);
+  }
+});
+
+// Прекращение всплытия событий в JavaScript
+let elem26 = document.querySelector("#elem26");
+let elem27 = document.querySelector("#elem27");
+let elem28 = document.querySelector("#elem28");
+elem26.addEventListener("click", function () {
+  alert("text1");
+});
+elem27.addEventListener("click", function (event) {
+  event.stopPropagation();
+  //   event.stopImmediatePropagation();
+  alert("text2");
+});
+elem28.addEventListener("click", function () {
+  alert("text3");
+});
+
+// ex 1
+let elem29 = document.querySelector("#elem29");
+let elem30 = document.querySelector("#elem30");
+let elem31 = document.querySelector("#elem31");
+
+elem30.addEventListener("click", function (event) {
+  event.stopPropagation();
+  elem31.classList.add("active");
+});
+
+elem29.addEventListener("click", function () {
+  // elem30.stopPropagation();
+  elem31.classList.remove("active");
+});
+
+// Погружение событий
+let elem32 = document.querySelector("#elem32");
+let elem33 = document.querySelector("#elem33");
+let elem34 = document.querySelector("#elem34");
+
+elem32.addEventListener(
+  "click",
+  function () {
+    alert("всплытия 32");
+  },
+  false
+);
+
+elem32.addEventListener(
+  "click",
+  function () {
+    alert("погружение 32");
+  },
+  true
+);
+
+elem33.addEventListener(
+  "click",
+  function () {
+    alert("погружение 33");
+  },
+  true
+);
+elem33.addEventListener(
+  "click",
+  function () {
+    alert("всплытия 33");
+  },
+  false
+);
+elem34.addEventListener(
+  "click",
+  function () {
+    alert("погружение 34");
+  },
+  true
+);
+elem34.addEventListener(
+  "click",
+  function () {
+    alert("всплытия 34");
+  },
+  false
+);
+
+// Навешивание обработчиков на новые элементы
+let elem35 = document.querySelector("#elem35");
+let elem36 = document.querySelector("#elem36");
+let items = document.querySelectorAll(".li");
+
+function handler() {
+  return (this.innerHTML += "!");
+}
+
+for (let item of items) {
+  item.addEventListener("click", handler);
+}
+
+elem36.addEventListener("click", function () {
+  let item = document.createElement("li");
+  item.innerHTML = "item";
+  elem35.appendChild(item);
+
+  item.addEventListener("click", handler);
+});
+
+// Делегирование событий
+elem35.addEventListener("click", function (event) {
+  let li = event.target.closest("li");
+  if (li) {
+    event.target.innerHTML += "!";
+  }
+});
+
+elem36.addEventListener("click", function () {
+  let item = document.createElement("li");
+  item.innerHTML = "item";
+  elem35.appendChild(item);
+});
